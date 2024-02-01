@@ -1,0 +1,4 @@
+int -> foo -> bool {
+    println("Hello, World!")
+    return true
+}
