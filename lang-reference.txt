@@ -1,0 +1,15 @@
+My-Arduino-Language(MAL)をArduino(.ino)にトランスパイルする.
+
+
+関数
+int -> foo -> bool {
+    println("Hello, World!")
+    return true
+}
+
+Compiled Code
+
+int foo {
+    Serial.println("Hello, World!");
+    return true
+}
