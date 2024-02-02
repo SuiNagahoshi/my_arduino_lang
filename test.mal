@@ -1,4 +1,4 @@
 int -> foo -> bool {
-    println("Hello, World!")
+    println << "Hello, World!"
     return true
 }
