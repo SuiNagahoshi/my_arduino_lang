@@ -1,18 +1,48 @@
 use std::io::Read;
 
-use unicode_segmentation::UnicodeSegmentation;
+fn replace_tab(content: String) -> String {
+    let replaced = content.replace("    ", "\t");
+    replaced
+}
 
-fn lex(content: String) -> Vec<&'static str> {
-    let to_replace_token = ["\t", "(", ")", "[", "]", "{", "}", "->"];
-    let replaced_content: String = content.replace("    ", "\t");
+fn replace_tokens(content: String) -> String {
+    let to_replace_token = ["\n" ,"\t", "(", ")", "[", "]", "{", "}", "->"];
+    let mut token_set = content;
     for r in to_replace_token {
-        replaced_content.replace(r, &format!(" {} ", r));
+        token_set = token_set.replace(r, &format!(" {} ", r));
     }
+    token_set
+}
+
+fn split_spaces(content: String) -> Vec<String> {
+    //let mut token_set:Vec<&str> = content.split(' ').collect();
+    let mut token_set = content.split(' ').fold(Vec::new(), |mut s, i| {
+        s.push(i.to_string());
+        s
+    });
+    /*for i in contents {
+        if &i != &"" {
+            tokens.push(i);
+        }
+    }*/
+    token_set.retain(|x| x != "");
+    token_set
+}
+
+fn lex(content: String) -> Vec<String> {
     
-    let mut tmp_contents: Vec<&str> = replaced_content.split(' ').collect::<Vec<&str>>();//.split_whitespace().collect::<Vec<&str>>();
-    tmp_contents.retain(|&x| x == "");
+    let mut replaced_content = replace_tab(content);
+    println!("{}", replaced_content);
+
+    replaced_content = replace_tokens(replaced_content);
+    println!("{}", replaced_content);
+    
+    //let tmp_contents: Vec<&str> = replaced_content.split(' ').collect();//.split_whitespace().collect::<Vec<&str>>();
+    //tmp_contents.retain(|&x| x == "");
+    let mut tokens = split_spaces(replaced_content);//Vec::new();
+    println!("{:?}", tokens);
     //let lexed_content = tmp_contents;
-    return tmp_contents;
+    tokens
 }
 
 fn main() {
