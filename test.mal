@@ -1,4 +1,5 @@
-int -> foo -> bool {
+bar :int -> foo -> :bool {
     println << "Hello, World!"
+    ans :int = (bar + 2) / 3
     return true
 }
