@@ -39,7 +39,7 @@ fn lex(content: String) -> Vec<String> {
     
     //let tmp_contents: Vec<&str> = replaced_content.split(' ').collect();//.split_whitespace().collect::<Vec<&str>>();
     //tmp_contents.retain(|&x| x == "");
-    let mut tokens = split_spaces(replaced_content);//Vec::new();
+    let tokens = split_spaces(replaced_content);//Vec::new();
     println!("{:?}", tokens);
     //let lexed_content = tmp_contents;
     tokens
