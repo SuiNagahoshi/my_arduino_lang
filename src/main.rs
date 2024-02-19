@@ -1,55 +1,18 @@
 use std::io::Read;
 
-/*enum Token {
-    NAME,
-    PRINTLN,
-    RETURN,
+use unicode_segmentation::UnicodeSegmentation;
 
-    LBRACKET,
-    RBRACKET,
-    LCURLY,
-    RCURLY,
-    LSQUARE,
-    RSQUARE,
-
-    DQUOTATION,
-    SQUOTATION,
-
-    TRUE,
-    FALSE,
-}*/
-
-fn lex(content: String)/* -> Vec<(Token, String)>*/ {
-    //let mut token_sets: Vec<(Token, String)> = Vec::new();
-    
-    //let mut tokens: Vec<&str> = content.split_whitespace().collect::<Vec<&str>>();
-
-    //println!("{:?}", tokens);
-
-    let mut tmp_token: String = "".to_string();
-    let mut tokens: Vec<String> = Vec::new();
-
-    for t in content.as_str().chars() {
-        tmp_token.push(t);
-        match t {
-            ' ' => {
-                tokens.push(tmp_token);
-                tmp_token = "".to_string();
-            },
-            '\n' => {
-                tokens.push(tmp_token);
-                tmp_token = "".to_string();
-            },
-            '\"' => {
-                tokens.push(tmp_token);
-                tmp_token = "".to_string();
-            },
-            _ => ()
-        }
+fn lex(content: String) -> Vec<&'static str> {
+    let to_replace_token = ["\t", "(", ")", "[", "]", "{", "}", "->"];
+    let replaced_content: String = content.replace("    ", "\t");
+    for r in to_replace_token {
+        replaced_content.replace(r, &format!(" {} ", r));
     }
-
-    println!("{:?}", tokens);
-
+    
+    let mut tmp_contents: Vec<&str> = replaced_content.split(' ').collect::<Vec<&str>>();//.split_whitespace().collect::<Vec<&str>>();
+    tmp_contents.retain(|&x| x == "");
+    //let lexed_content = tmp_contents;
+    return tmp_contents;
 }
 
 fn main() {
@@ -67,5 +30,7 @@ fn main() {
 
     println!("The texts:\n{}", source_contents);
 
-    lex(source_contents);
+    //let tokens = lex2(source_contents);
+
+    println!("{:?}", lex(source_contents));
 }
